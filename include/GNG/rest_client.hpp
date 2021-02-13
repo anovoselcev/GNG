@@ -20,7 +20,7 @@ public:
 
 protected:
 
-    QNetworkAccessManager*  _client;
+    QNetworkAccessManager*  _client = nullptr;
     QString                 _token;
     QString                 _apiURL;
 

@@ -12,8 +12,10 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    static MainWindow* GetInstance() noexcept;
     ~MainWindow();
 
 private:
+    inline static MainWindow* mw = nullptr;
     Ui::MainWindow *ui;
 };
