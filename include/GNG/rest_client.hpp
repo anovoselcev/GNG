@@ -1,10 +1,11 @@
 #pragma once
 
 #include <QNetworkAccessManager>
+#include "GNG/rest_domain.hpp"
 
 namespace GNG {
 
-class RestClient{
+class RestClient : public QNetworkAccessManager{
 
 public:
 
@@ -13,14 +14,12 @@ public:
     RestClient(const QString& token,
                const QString& apiURL = RestApiURL) noexcept;
 
-    RestClient(QString&& token,
-               QString&& apiURL = "https://api-invest.tinkoff.ru/openapi") noexcept;
+    QString InstrumentByFIGI(const QString& FIGI);
 
-    ~RestClient();
+    std::vector<Account> Accounts() noexcept;
 
 protected:
 
-    QNetworkAccessManager*  _client = nullptr;
     QString                 _token;
     QString                 _apiURL;
 
