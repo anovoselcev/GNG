@@ -106,32 +106,32 @@ namespace GNG {
         int32_t RequestedLots;  //json:"requestedLots"
         int32_t ExecutedLots;   //json:"executedLots"
         QString Type;           //json:"type"
-        double Price;           //json:"price"
+        double  Price;          //json:"price"
     };
 
     struct PositionBalance{
-        QString FIGI;                           //json:"figi"
-        QString Ticker;                         //json:"ticker"
-        QString ISIN;                           //json:"isin"
-        QString InstrumentType;                 //json:"instrumentType"
-        double Balance;                         //json:"balance"
-        double Blocked;                         //json:"blocked"
-        int32_t Lots;                           //json:"lots"
+        QString     FIGI;                       //json:"figi"
+        QString     Ticker;                     //json:"ticker"
+        QString     ISIN;                       //json:"isin"
+        QString     InstrumentType;             //json:"instrumentType"
+        double      Balance;                    //json:"balance"
+        double      Blocked;                    //json:"blocked"
+        int32_t     Lots;                       //json:"lots"
         MoneyAmount ExpectedYield;              //json:"expectedYield"
         MoneyAmount AveragePositionPrice;       //json:"averagePositionPrice"
         MoneyAmount AveragePositionPriceNoNkd;  //json:"averagePositionPriceNoNkd"
-        QString Name;                           //json:"name"
+        QString     Name;                       //json:"name"
     };
 
     struct CurrencyBalance{
         QString Currency; //json:"currency"
-        double Balance;   //json:"balance"
-        double Blocked;   //json:"blocked"
+        double  Balance;  //json:"balance"
+        double  Blocked;  //json:"blocked"
     };
 
     struct Portfolio{
         std::vector<PositionBalance> Positions;
-        std::vector<CurrencyBalance>Currencies;
+        std::vector<CurrencyBalance> Currencies;
     };
 
     struct Instrument {
@@ -139,7 +139,7 @@ namespace GNG {
         QString Ticker;           //json:"ticker"
         QString ISIN;             //json:"isin"
         QString Name;             //json:"name"
-        double MinPriceIncrement; //json:"minPriceIncrement"
+        double  MinPriceIncrement;//json:"minPriceIncrement"
         int32_t Lot;              //json:"lot"
         QString Currency;         //json:"currency"
         QString Type;             //json:"type"
@@ -149,25 +149,25 @@ namespace GNG {
     struct Trade {
         QString ID;       //json:"tradeId"
         QString DateTime; //json:"date"
-        double Price;     //json:"price"
+        double  Price;    //json:"price"
         int32_t Quantity; //json:"quantity"
     };
 
     struct Operation {
-        QString ID;                 //json:"id"
-        QString Status;             //json:"status"
-        std::vector<Trade> Trades;  //json:"trades"
-        MoneyAmount Commission;     //json:"commission"
-        QString Currency;           //json:"currency"
-        double Payment;             //json:"payment"
-        double Price;               //json:"price"
-        int32_t Quantity;           //json:"quantity"
-        int32_t QuantityExecuted;   //json:"quantityExecuted"
-        QString FIGI;               //json:"figi"
-        QString InstrumentType;     //json:"instrumentType"
-        bool IsMarginCall;          //json:"isMarginCall"
-        QString DateTime;           //json:"date"
-        QString OperationType;      //json:"operationType"
+        QString             ID;                 //json:"id"
+        QString             Status;             //json:"status"
+        std::vector<Trade>  Trades;             //json:"trades"
+        MoneyAmount         Commission;         //json:"commission"
+        QString             Currency;           //json:"currency"
+        double              Payment;            //json:"payment"
+        double              Price;              //json:"price"
+        int32_t             Quantity;           //json:"quantity"
+        int32_t             QuantityExecuted;   //json:"quantityExecuted"
+        QString             FIGI;               //json:"figi"
+        QString             InstrumentType;     //json:"instrumentType"
+        bool                IsMarginCall;       //json:"isMarginCall"
+        QString             DateTime;           //json:"date"
+        QString             OperationType;      //json:"operationType"
     };
 
     struct RestPriceQuantity {
@@ -176,17 +176,17 @@ namespace GNG {
     };
 
     struct RestOrderBook {
-        QString FIGI;                        //json:"figi"
-        int32_t Depth;                       //json:"depth"
-        std::vector<RestPriceQuantity> Bids; //json:"bids"
-        std::vector<RestPriceQuantity> Asks; //json:"asks"
-        QString TradeStatus;                 //json:"tradeStatus"
-        double MinPriceIncrement;            //json:"minPriceIncrement"
-        double LastPrice;                    //json:"lastPrice,omitempty"
-        double ClosePrice;                   //json:"closePrice,omitempty"
-        double LimitUp;                      //json:"limitUp,omitempty"
-        double LimitDown;                    //json:"limitDown,omitempty"
-        double FaceValue;                    //json:"faceValue,omitempty"
+        QString                        FIGI;                //json:"figi"
+        int32_t                        Depth;               //json:"depth"
+        std::vector<RestPriceQuantity> Bids;                //json:"bids"
+        std::vector<RestPriceQuantity> Asks;                //json:"asks"
+        QString                        TradeStatus;         //json:"tradeStatus"
+        double                         MinPriceIncrement;   //json:"minPriceIncrement"
+        double                         LastPrice;           //json:"lastPrice,omitempty"
+        double                         ClosePrice;          //json:"closePrice,omitempty"
+        double                         LimitUp;             //json:"limitUp,omitempty"
+        double                         LimitDown;           //json:"limitDown,omitempty"
+        double                         FaceValue;           //json:"faceValue,omitempty"
     };
 
 }
