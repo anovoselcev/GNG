@@ -23,8 +23,8 @@ SOURCES += \
 
 HEADERS += \
     include/GNG/analys/part_diff.hpp \
-    include/GNG/i_rest_client.h \
-    include/GNG/rest_client.h \
+    include/GNG/i_rest_client.hpp \
+    include/GNG/rest_client.hpp \
     include/GNG/rest_client_sandbox.hpp \
     include/GNG/rest_domain.hpp \
     include/mainwindow.hpp

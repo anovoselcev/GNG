@@ -6,11 +6,8 @@
 
 namespace GNG {
 
+class IRestClient : public QNetworkAccessManager{
 
-
-class IRestClient : public QNetworkAccessManager
-{
-    Q_OBJECT
 public:
     IRestClient() = default;
 
@@ -19,8 +16,6 @@ public:
 
     //! Авторизация
     virtual bool Authorization() = 0;
-
-
 
     //! [0] Orders
 
@@ -96,10 +91,11 @@ public:
 
 protected:
     //! Отправляет POST запрос по url с данными json
-    QNetworkReply *SendPostRequest(const QUrl& url, const QJsonObject& json);
+    QNetworkReply* SendPostRequest(const QUrl& url,
+                                   const QJsonObject& json);
 
     //! Отправляет GET запрос по url
-    QNetworkReply *SendGetRequest(const QUrl& path);
+    QNetworkReply* SendGetRequest(const QUrl& path);
 
     //! Токен аутентификации
     QString                 _token;
@@ -110,7 +106,7 @@ protected:
     //! Структура, хранящая json:"brokerAccountType" (Account::Type - тип аккаунта) и json:"brokerAccountId" (Account::ID - ID аккаунта)
     Account account;
 
-    inline static const QString RestApiURL = "https://api-invest.tinkoff.ru/openapi";
+    inline static const QString RestApiURL        = "https://api-invest.tinkoff.ru/openapi";
     inline static const QString RestApiSandboxURL = "https://api-invest.tinkoff.ru/openapi/sandbox";
 };
 

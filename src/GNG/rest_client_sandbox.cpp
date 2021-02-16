@@ -8,10 +8,10 @@ namespace GNG {
 
 RestClientSandBox::RestClientSandBox(const QString& token,
                                      const QString& api) noexcept
-    :   IRestClient(token, api){}
+                                    : IRestClient(token, api){}
 
-bool RestClientSandBox::Authorization()
-{
+bool RestClientSandBox::Authorization(){
+
     QUrl url = _apiURL + "/sandbox/register";
 
     auto reply = SendPostRequest(url, QJsonObject());
@@ -28,7 +28,8 @@ bool RestClientSandBox::Authorization()
     return reply->error() == QNetworkReply::NoError;
 }
 
-void RestClientSandBox::SetCurrencyBalance(const QString& currency, double balance){
+void RestClientSandBox::SetCurrencyBalance(const QString& currency,
+                                           double balance){
     QUrl url = _apiURL + "/sandbox/currencies/balance";
 
     QJsonObject body;

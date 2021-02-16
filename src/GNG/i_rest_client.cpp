@@ -1,4 +1,4 @@
-#include "GNG/i_rest_client.h"
+#include "GNG/i_rest_client.hpp"
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QNetworkReply>
@@ -6,11 +6,13 @@
 
 namespace GNG {
 
-IRestClient::IRestClient(const QString &token, const QString &apiURL) noexcept
-    : _token(token), _apiURL(apiURL){}
+IRestClient::IRestClient(const QString &token,
+                         const QString &apiURL) noexcept
+                         : _token(token),
+                           _apiURL(apiURL){}
 
-QNetworkReply *IRestClient::SendPostRequest(const QUrl &path, const QJsonObject &json)
-{
+QNetworkReply *IRestClient::SendPostRequest(const QUrl &path,
+                                            const QJsonObject &json){
     QNetworkRequest req;
     req.setUrl(path);
     req.setRawHeader(QByteArray("Authorization"),
@@ -26,8 +28,7 @@ QNetworkReply *IRestClient::SendPostRequest(const QUrl &path, const QJsonObject 
     return reply;
 }
 
-QNetworkReply *IRestClient::SendGetRequest(const QUrl &path)
-{
+QNetworkReply* IRestClient::SendGetRequest(const QUrl &path){
     QNetworkRequest req;
     req.setUrl(path);
     req.setRawHeader(QByteArray("Authorization"),
