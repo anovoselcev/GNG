@@ -15,12 +15,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/GNG/i_rest_client.cpp \
+    src/GNG/rest_client.cpp \
     src/GNG/rest_client_sandbox.cpp \
     src/main.cpp \
     src/mainwindow.cpp
 
 HEADERS += \
     include/GNG/analys/part_diff.hpp \
+    include/GNG/i_rest_client.h \
+    include/GNG/rest_client.h \
     include/GNG/rest_client_sandbox.hpp \
     include/GNG/rest_domain.hpp \
     include/mainwindow.hpp

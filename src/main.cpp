@@ -2,15 +2,20 @@
 #include <GNG/rest_client_sandbox.hpp>
 
 #include <QApplication>
+#include "GNG/rest_domain.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //MainWindow w;
     //w.show();
-    GNG::RestClientSandBox c("t.KR8nAVRVAw64pJ7rd_eau0q3Ra0XetjBtxhUoDGjxsQ4mUehXy67zdDgCT3qu-WuA-T9r8YFH73tIiRK3ITNCw",
-                      "https://api-invest.tinkoff.ru/openapi/sandbox");
-    qDebug() << c.Autorization();
+    GNG::RestClientSandBox c("t.N4ex5PfKxkGnjNHN6zmbyuYc-18FeLsF4q2fWcGUG__mSy6FNNXSc1NgndR0-2pAShDdDzhsD0eB0LVLhLoxcg",
+                             "https://api-invest.tinkoff.ru/openapi/sandbox");
+
+    qDebug() << "Authorization completed successfuly = " << c.Authorization();
+
+    c.SetCurrencyBalance(GNG::Currency::RUB, 10000);
+    c.GetCurrencies();
 
     return a.exec();
 }

@@ -6,95 +6,79 @@
 
 namespace GNG {
 
-    RestClientSandBox::RestClientSandBox(const QString& token,
-                           const QString& api) noexcept:
-                           _token(token),
-                           _apiURL(api){}
+RestClientSandBox::RestClientSandBox(const QString& token,
+                                     const QString& api) noexcept
+    :   IRestClient(token, api){}
 
+bool RestClientSandBox::Authorization()
+{
+    QUrl url = _apiURL + "/sandbox/register";
 
-    bool RestClientSandBox::Autorization(){
-        QUrl path = _apiURL + "/sandbox/register";
-        QNetworkRequest req;
-        req.setUrl(path);
+    auto reply = SendPostRequest(url, QJsonObject());
 
-        req.setRawHeader(QByteArray("Authorization"),
-                         QByteArray("Bearer ") + _token.toUtf8());
+    auto data = QJsonDocument::fromJson(reply->readAll());
 
-        reply = post(req, QJsonDocument().toJson());
-        connect(reply, &QNetworkReply::errorOccurred, this, &RestClientSandBox::SomeError);
-        connect(reply, &QNetworkReply::finished, this, &RestClientSandBox::FinishedAuthorization);
+    account.Type = data.object().take("payload").toObject().take("brokerAccountType").toString();
+    account.ID = data.object().take("payload").toObject().take("brokerAccountId").toString();
 
-        return reply->isOpen();
+    if(reply->error() != QNetworkReply::NoError) {
+        log(reply->errorString());
     }
 
-    void RestClientSandBox::FinishedAuthorization(){
-        reply->disconnect(SIGNAL(finished()));
-        data = QJsonDocument::fromJson(reply->readAll());
+    return reply->error() == QNetworkReply::NoError;
+}
 
-        account.Type = data.object().take("payload").toObject().take("brokerAccountType").toString();
-        account.ID = data.object().take("payload").toObject().take("brokerAccountId").toString();
-        SetCurrencyBalance(Currency::RUB, 10000);
+void RestClientSandBox::SetCurrencyBalance(const QString& currency, double balance){
+    QUrl url = _apiURL + "/sandbox/currencies/balance";
+
+    QJsonObject body;
+    body.insert("currency", currency);
+    body.insert("balance", balance);
+    body.insert("brokerAccountId,omitempty", account.ID);
+
+    auto reply = SendPostRequest(url, body);
+
+    if(reply->error() != QNetworkReply::NoError) {
+        log(reply->errorString());
     }
 
-    void RestClientSandBox::SomeError(QNetworkReply::NetworkError e){
-        qDebug() << e;
+    qDebug() << "SetCurrencyBalance Reply:";
+    log(reply->readAll());
+}
+
+void RestClientSandBox::GetCurrencies(){
+    QUrl url = _apiURL + "/portfolio/currencies" + "?brokerAccountId=" + account.ID;
+
+    auto reply = SendGetRequest(url);
+
+    if(reply->error() != QNetworkReply::NoError) {
+        log(reply->errorString());
     }
 
-    void RestClientSandBox::SetCurrencyBalance(const QString& currency, double balance){
-        QUrl url = _apiURL + "/sandbox/currencies/balance";
-        QNetworkRequest req;
-        req.setUrl(url);
-        QJsonObject body;
+    qDebug() << "GetCurrences Reply:";
+    log(reply->readAll());
+}
 
-        body.insert("currency", currency);
-        body.insert("balance", balance);
-        body.insert("brokerAccountId,omitempty", account.ID);
 
-        req.setRawHeader(QByteArray("Authorization"),
-                         QByteArray("Bearer ") + _token.toUtf8());
+QString RestClientSandBox::GetInstrumentByFIGI(const QString& FIGI){
+    QUrl url = _apiURL + "/market/search/by-figi?figi=" + FIGI;
+//    QNetworkRequest req;
+//    req.setUrl(path);
+//    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+//    QJsonDocument data;
+    auto reply = SendGetRequest(url);
 
-        reply = post(req, QJsonDocument(body).toJson());
-        connect(reply, &QNetworkReply::finished, this, &RestClientSandBox::FinishedSetCurrencyBalance);
+    if(reply->error() != QNetworkReply::NoError) {
+        log(reply->errorString());
     }
 
-    void RestClientSandBox::FinishedSetCurrencyBalance(){
-        reply->disconnect(SIGNAL(finished()));
-        qDebug() << reply->readAll();
-        GetCurrences();
-    }
+    //Можно передавать что-то более удобное
+    return reply->readAll();
+}
 
-    void RestClientSandBox::GetCurrences(){
-        QUrl url = _apiURL + "/portfolio/currencies" + "?brokerAccountId=" + account.ID;
-
-        QNetworkRequest req;
-        req.setUrl(url);
-
-        req.setRawHeader(QByteArray("Authorization"),
-                         QByteArray("Bearer ") + _token.toUtf8());
-
-        reply = get(req);
-        connect(reply, &QNetworkReply::finished, this, &RestClientSandBox::FinishedGetCurrences);
-    }
-
-    void RestClientSandBox::FinishedGetCurrences(){
-        reply->disconnect(SIGNAL(finished()));
-        qDebug() << reply->readAll();
-    }
-
-
-    QString RestClientSandBox::InstrumentByFIGI(const QString& FIGI){
-        QUrl path = _apiURL + "/market/search/by-figi?figi=" + FIGI;
-        QNetworkRequest req;
-        req.setUrl(path);
-        req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-        QJsonDocument data;
-        QNetworkReply* reply = post(req, data.toJson());
-        return "";
-    }
-
-    std::vector<Account> RestClientSandBox::Accounts() noexcept{
-        QUrl path = _apiURL + "/user/accounts";
-        return {};
-    }
+std::vector<Account> RestClientSandBox::Accounts() noexcept{
+    QUrl path = _apiURL + "/user/accounts";
+    return {};
+}
 
 }
