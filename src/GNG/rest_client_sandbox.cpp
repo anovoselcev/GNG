@@ -47,33 +47,6 @@ void RestClientSandBox::SetCurrencyBalance(const QString& currency,
     log(reply->readAll());
 }
 
-void RestClientSandBox::GetCurrencies() const{
-    QUrl url = _apiURL + "/portfolio/currencies" + "?brokerAccountId=" + account.ID;
-
-    auto reply = SendGetRequest(url);
-
-    if(!isReplyValid(reply))
-        return;
-
-    qDebug() << "GetCurrences Reply:";
-    log(reply->readAll());
-}
-
-
-QString RestClientSandBox::GetInstrumentByFIGI(const QString& FIGI) const{
-    QUrl url = _apiURL + "/market/search/by-figi?figi=" + FIGI;
-//    QNetworkRequest req;
-//    req.setUrl(path);
-//    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-//    QJsonDocument data;
-    auto reply = SendGetRequest(url);
-
-    if(!isReplyValid(reply))
-        return QString();
-
-    //Можно передавать что-то более удобное
-    return reply->readAll();
-}
 
 std::vector<Account> RestClientSandBox::Accounts() noexcept{
     QUrl path = _apiURL + "/user/accounts";

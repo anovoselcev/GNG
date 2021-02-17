@@ -18,8 +18,6 @@ public:
     bool Authorization() override;
 
 
-    QString GetInstrumentByFIGI(const QString& FIGI) const override;
-
     //! [0] Sandbox
 
     //! Выставление баланса по валютным позициям
@@ -35,9 +33,6 @@ public:
     void Clear();
 
     //! [0] Sandbox
-
-    //! Получение валютных активов клиента
-    void GetCurrencies() const override;
 
     std::vector<Account> Accounts() noexcept;
 

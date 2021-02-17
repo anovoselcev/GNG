@@ -22,7 +22,7 @@ public:
     //! [0] Orders
 
     //! Получение списка активных заявок
-    virtual void GetOrders() const {};
+    QByteArray GetOrders() const;
 
     //! Создание лимитной заявки
     virtual void CreateLimitOrder(){};
@@ -39,10 +39,10 @@ public:
     //! [1] Portfolio
 
     //! Получение портфеля клиента
-    virtual void GetPortfolio() const{};
+    QByteArray GetPortfolio() const;
 
     //! Получение валютных активов клиента
-    virtual void GetCurrencies() const{};
+    QByteArray GetCurrencies() const;
 
     //! [1] Portfolio
 
@@ -50,28 +50,31 @@ public:
     //! [2] Market
 
     //! Получение списка акций
-    virtual void GetStocks() const{};
+    QByteArray GetStocks() const;
 
     //! Получение списка облигаций
-    virtual void GetBonds() const{};
+    QByteArray GetBonds() const;
 
     //! Получение списка ETF
-    virtual void GetETF() const{};
+    QByteArray GetETF() const;
 
     //! Получение списка валютных пар
-    virtual void GetCurrenciesPair() const{};
+    QByteArray GetCurrenciesPair() const;
 
     //! Получение стакана по FIGI
-    virtual void GetOrderBookByFIGI() const{};
+    //! Неверная сигнатура!!!!!
+    QByteArray GetOrderBookByFIGI() const;
 
     //! Получение исторических свечей по FIGI
-    virtual void GetCandlesByFIGI() const{};
+    //! Неверная сигнатура!!!!!
+    QByteArray GetCandlesByFIGI() const;
 
     //! Получение инструмента по FIGI
-    virtual QString GetInstrumentByFIGI(const QString& FIGI) const {return QString();};
+    QByteArray GetInstrumentByFIGI(const QString& FIGI) const;
 
     //! Получение инструмента по Ticker'у
-    virtual void GetInstrumentByTicker() const{};
+    //! Неверная сигнатура!!!!
+    QByteArray GetInstrumentByTicker() const;
 
     //! [2] Market
 
@@ -79,7 +82,8 @@ public:
     //! [3] Operations
 
     //! Получение списка операций
-    virtual void GetOperations() const{};
+    //! Неверная сигнатура!!!!
+    QByteArray GetOperations() const;
 
     //! [3] Operations
 
@@ -87,7 +91,7 @@ public:
     //! [4] User
 
     //! Получение брокерских счетов клиента
-    virtual void GetAccounts() const{};
+    QByteArray GetAccounts() const;
 
     //! [4] User
 
@@ -100,6 +104,8 @@ protected:
     QNetworkReply* SendGetRequest(const QUrl& path) const;
 
     bool isReplyValid(QNetworkReply* reply) const noexcept;
+
+    QByteArray Get(const QUrl& url) const;
 
 
     mutable                 std::unique_ptr<QNetworkAccessManager> _manager;

@@ -53,4 +53,59 @@ bool IRestClient::isReplyValid(QNetworkReply* reply) const noexcept{
     return true;
 }
 
+QByteArray IRestClient::Get(const QUrl& url) const{
+    auto reply = SendGetRequest(url);
+
+    if(!isReplyValid(reply))
+        return QByteArray();
+
+    qDebug() << "Get Reply:";
+    log(reply->readAll());
+    return reply->readAll();
+}
+
+QByteArray IRestClient::GetOrders() const{
+    QUrl url = _apiURL + "/orders" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetPortfolio() const{
+    QUrl url = _apiURL + "/portfolio" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetCurrencies() const{
+    QUrl url = _apiURL + "/portfolio/currencies" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetStocks() const{
+    QUrl url = _apiURL + "/market/stocks" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetBonds() const{
+    QUrl url = _apiURL + "/market/bonds" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetETF() const{
+    QUrl url = _apiURL + "/market/etfs" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetCurrenciesPair() const{
+    QUrl url = _apiURL + "/market/currencies" + "?brokerAccountId=" + account.ID;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetAccounts() const{
+    QUrl url = _apiURL + "/user/accounts";
+    return Get(url);
+}
+
+
+
+
+
 }
