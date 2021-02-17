@@ -47,7 +47,7 @@ void RestClientSandBox::SetCurrencyBalance(const QString& currency,
     log(reply->readAll());
 }
 
-void RestClientSandBox::GetCurrencies(){
+void RestClientSandBox::GetCurrencies() const{
     QUrl url = _apiURL + "/portfolio/currencies" + "?brokerAccountId=" + account.ID;
 
     auto reply = SendGetRequest(url);
@@ -60,7 +60,7 @@ void RestClientSandBox::GetCurrencies(){
 }
 
 
-QString RestClientSandBox::GetInstrumentByFIGI(const QString& FIGI){
+QString RestClientSandBox::GetInstrumentByFIGI(const QString& FIGI) const{
     QUrl url = _apiURL + "/market/search/by-figi?figi=" + FIGI;
 //    QNetworkRequest req;
 //    req.setUrl(path);

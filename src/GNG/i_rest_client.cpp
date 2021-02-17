@@ -18,7 +18,7 @@ QNetworkReply *IRestClient::SendPostRequest(const QUrl &path,
     req.setRawHeader(QByteArray("Authorization"),
                      QByteArray("Bearer ") + _token.toUtf8());
 
-    auto reply = post(req, json.isEmpty() ? QByteArray() : QJsonDocument(json).toJson());
+    auto reply = _manager->post(req, json.isEmpty() ? QByteArray() : QJsonDocument(json).toJson());
 
     //Блочим?
     QEventLoop loop;
@@ -28,12 +28,12 @@ QNetworkReply *IRestClient::SendPostRequest(const QUrl &path,
     return reply;
 }
 
-QNetworkReply* IRestClient::SendGetRequest(const QUrl &path){
+QNetworkReply* IRestClient::SendGetRequest(const QUrl &path) const{
     QNetworkRequest req;
     req.setUrl(path);
     req.setRawHeader(QByteArray("Authorization"),
                      QByteArray("Bearer ") + _token.toUtf8());
-    auto reply = get(req);
+    auto reply = _manager->get(req);
 
     //Блочим?
     QEventLoop loop;
@@ -43,7 +43,7 @@ QNetworkReply* IRestClient::SendGetRequest(const QUrl &path){
     return reply;
 }
 
-bool IRestClient::isReplyValid(QNetworkReply* reply){
+bool IRestClient::isReplyValid(QNetworkReply* reply) const noexcept{
     if(reply->error() != QNetworkReply::NoError) {
         log(reply->errorString());
         log(reply->readAll());
