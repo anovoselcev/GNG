@@ -5,7 +5,7 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 
-#include "GNG/i_rest_client.h"
+#include "i_rest_client.hpp"
 
 namespace GNG {
 

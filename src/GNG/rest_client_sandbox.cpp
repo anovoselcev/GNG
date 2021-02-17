@@ -25,6 +25,8 @@ bool RestClientSandBox::Authorization(){
         log(reply->errorString());
     }
 
+    // Should i do this: reply->deleteLater(); ?
+
     return reply->error() == QNetworkReply::NoError;
 }
 
