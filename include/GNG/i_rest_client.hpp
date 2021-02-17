@@ -97,6 +97,8 @@ protected:
     //! Отправляет GET запрос по url
     QNetworkReply* SendGetRequest(const QUrl& path);
 
+    bool isReplyValid(QNetworkReply* reply);
+
     //! Токен аутентификации
     QString                 _token;
 

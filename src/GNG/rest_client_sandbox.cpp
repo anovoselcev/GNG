@@ -16,18 +16,17 @@ bool RestClientSandBox::Authorization(){
 
     auto reply = SendPostRequest(url, QJsonObject());
 
+    if(!isReplyValid(reply))
+        return false;
+
     auto data = QJsonDocument::fromJson(reply->readAll());
 
     account.Type = data.object().take("payload").toObject().take("brokerAccountType").toString();
     account.ID = data.object().take("payload").toObject().take("brokerAccountId").toString();
 
-    if(reply->error() != QNetworkReply::NoError) {
-        log(reply->errorString());
-    }
-
     // Should i do this: reply->deleteLater(); ?
 
-    return reply->error() == QNetworkReply::NoError;
+    return true;
 }
 
 void RestClientSandBox::SetCurrencyBalance(const QString& currency,
@@ -41,9 +40,8 @@ void RestClientSandBox::SetCurrencyBalance(const QString& currency,
 
     auto reply = SendPostRequest(url, body);
 
-    if(reply->error() != QNetworkReply::NoError) {
-        log(reply->errorString());
-    }
+    if(!isReplyValid(reply))
+        return;
 
     qDebug() << "SetCurrencyBalance Reply:";
     log(reply->readAll());
@@ -54,9 +52,8 @@ void RestClientSandBox::GetCurrencies(){
 
     auto reply = SendGetRequest(url);
 
-    if(reply->error() != QNetworkReply::NoError) {
-        log(reply->errorString());
-    }
+    if(!isReplyValid(reply))
+        return;
 
     qDebug() << "GetCurrences Reply:";
     log(reply->readAll());
@@ -71,9 +68,8 @@ QString RestClientSandBox::GetInstrumentByFIGI(const QString& FIGI){
 //    QJsonDocument data;
     auto reply = SendGetRequest(url);
 
-    if(reply->error() != QNetworkReply::NoError) {
-        log(reply->errorString());
-    }
+    if(!isReplyValid(reply))
+        return QString();
 
     //Можно передавать что-то более удобное
     return reply->readAll();

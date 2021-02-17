@@ -43,4 +43,13 @@ QNetworkReply* IRestClient::SendGetRequest(const QUrl &path){
     return reply;
 }
 
+bool IRestClient::isReplyValid(QNetworkReply* reply){
+    if(reply->error() != QNetworkReply::NoError) {
+        log(reply->errorString());
+        log(reply->readAll());
+        return false;
+    }
+    return true;
+}
+
 }
