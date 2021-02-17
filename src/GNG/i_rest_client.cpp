@@ -8,7 +8,8 @@ namespace GNG {
 
 IRestClient::IRestClient(const QString &token,
                          const QString &apiURL) noexcept
-                         : _token(token),
+                         : _manager(std::make_unique<QNetworkAccessManager>()),
+                           _token(token),
                            _apiURL(apiURL){}
 
 QNetworkReply *IRestClient::SendPostRequest(const QUrl &path,
