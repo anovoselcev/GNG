@@ -62,19 +62,21 @@ public:
     QByteArray GetCurrenciesPair() const;
 
     //! Получение стакана по FIGI
-    //! Неверная сигнатура!!!!!
-    QByteArray GetOrderBookByFIGI() const;
+    QByteArray GetOrderBookByFIGI(const QString& FIGI,
+                                  uint32_t depth) const;
 
     //! Получение исторических свечей по FIGI
     //! Неверная сигнатура!!!!!
+    //! Надо понять как передавать имя!!!!!
+    //! https://github.com/TinkoffCreditSystems/invest-openapi-go-sdk/blob/master/rest_client.go
+    //! строка 366
     QByteArray GetCandlesByFIGI() const;
 
     //! Получение инструмента по FIGI
     QByteArray GetInstrumentByFIGI(const QString& FIGI) const;
 
     //! Получение инструмента по Ticker'у
-    //! Неверная сигнатура!!!!
-    QByteArray GetInstrumentByTicker() const;
+    QByteArray GetInstrumentByTicker(const QString& tiker) const;
 
     //! [2] Market
 
@@ -108,7 +110,7 @@ protected:
     QByteArray Get(const QUrl& url) const;
 
 
-    mutable                 std::unique_ptr<QNetworkAccessManager> _manager;
+    mutable std::unique_ptr<QNetworkAccessManager> _manager;
 
     //! Токен аутентификации
     QString                 _token;

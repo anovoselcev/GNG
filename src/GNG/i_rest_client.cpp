@@ -104,8 +104,23 @@ QByteArray IRestClient::GetAccounts() const{
     return Get(url);
 }
 
+QByteArray IRestClient::GetInstrumentByTicker(const QString &ticker) const{
+    QUrl url = _apiURL + "/market/search/by-ticker?ticker=" + ticker;
+    return Get(url);
+}
 
+QByteArray IRestClient::GetInstrumentByFIGI(const QString &FIGI) const{
+    QUrl url = _apiURL + "/market/search/by-figi?figi=" + FIGI;
+    return Get(url);
+}
 
+QByteArray IRestClient::GetOrderBookByFIGI(const QString &FIGI,
+                                           uint32_t depth) const{
+    QUrl url = _apiURL + "/market/orderbook?depth="
+                       + QString::number(depth)
+                       + "figi=" + FIGI;
+    return Get(url);
+}
 
 
 }

@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
     c.SetCurrencyBalance(GNG::Currency::RUB, 10000);
     c.GetCurrencies();
+    c.GetInstrumentByFIGI("BBG000BPH459");
 
     return a.exec();
 }
