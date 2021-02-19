@@ -118,7 +118,19 @@ QByteArray IRestClient::GetOrderBookByFIGI(const QString &FIGI,
                                            uint32_t depth) const{
     QUrl url = _apiURL + "/market/orderbook?depth="
                        + QString::number(depth)
-                       + "figi=" + FIGI;
+                       + "&figi=" + FIGI;
+    return Get(url);
+}
+
+QByteArray IRestClient::GetCandlesByFIGI(const QString &FIGI,
+                                         const QString &from,
+                                         const QString &to,
+                                         const QString &interval) const{
+    QUrl url = _apiURL + "/market/candles?"
+                       + "figi=" + FIGI
+                       + "&from=" + from
+                       + "&to=" + to
+                       + "&interval" + interval;
     return Get(url);
 }
 

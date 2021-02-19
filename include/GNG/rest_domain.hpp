@@ -3,6 +3,9 @@
 #include <QtDebug>
 #include <QDateTime>
 #include <vector>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
 
 namespace GNG {
 
@@ -13,6 +16,31 @@ inline void log(const QString& str) {
 inline void log(QString&& str) {
     qDebug() << QDateTime::currentDateTimeUtc().toString() << ": " << str;
 }
+
+namespace DateTime {
+
+    inline QString currentISO8601TimeUTC() {
+      auto now = std::chrono::system_clock::now();
+      auto itt = std::chrono::system_clock::to_time_t(now);
+      std::ostringstream ss;
+      ss << std::put_time(localtime(&itt), "%FT%TZ");
+      return QString::fromStdString(ss.str());
+    }
+
+    const inline QString MIN_1  = "1min";
+    const inline QString MIN_2  = "2min";
+    const inline QString MIN_3  = "3min";
+    const inline QString MIN_5  = "5min";
+    const inline QString MIN_10 = "10min";
+    const inline QString MIN_15 = "15min";
+    const inline QString MIN_30 = "30min";
+    const inline QString HOUR   = "hour";
+    const inline QString DAY    = "day";
+    const inline QString WEEK   = "week";
+    const inline QString MONTH  = "month";
+}
+
+
 
 namespace Currency {
     const inline QString RUB = "RUB";

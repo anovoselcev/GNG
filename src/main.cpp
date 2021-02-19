@@ -4,6 +4,7 @@
 #include <QApplication>
 #include "GNG/rest_domain.hpp"
 
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -17,6 +18,13 @@ int main(int argc, char *argv[])
     c.SetCurrencyBalance(GNG::Currency::RUB, 10000);
     c.GetCurrencies();
     c.GetInstrumentByFIGI("BBG000BPH459");
+    c.GetOrderBookByFIGI("BBG000BPH459", 2);
+    auto last_date = GNG::DateTime::currentISO8601TimeUTC().toStdString();
+    last_date[2] = '1';
+    c.GetCandlesByFIGI("BBG000BPH459",
+                       QString::fromStdString(last_date),
+                       GNG::DateTime::currentISO8601TimeUTC(),
+                       GNG::DateTime::MONTH);
 
     return a.exec();
 }
