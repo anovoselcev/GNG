@@ -83,8 +83,10 @@ public:
     //! [3] Operations
 
     //! Получение списка операций
-    //! Неверная сигнатура!!!!
-    QByteArray GetOperations() const;
+    QByteArray GetOperations(const QString& from,
+                             const QString& to,
+                             const QString& figi,
+                             const QString& accID) const;
 
     //! [3] Operations
 

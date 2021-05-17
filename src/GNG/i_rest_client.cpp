@@ -174,5 +174,17 @@ QByteArray IRestClient::GetCandlesByFIGI(const QString &FIGI,
     return Get(url);
 }
 
+QByteArray IRestClient::GetOperations(const QString &from,
+                                      const QString &to,
+                                      const QString &figi,
+                                      const QString &accID) const{
+    QUrl url = _apiURL + "/operations/?"
+                       + "from=" + modifyDateForURL(from)
+                       + "&to="   + modifyDateForURL(to)
+                       + "&figi=" + figi
+                       + "&brokerAccountId=" + accID;
+    return Get(url);
+}
+
 
 }
