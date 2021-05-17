@@ -4,6 +4,8 @@
 #include <QApplication>
 #include "GNG/rest_domain.hpp"
 
+//https://tinkoffcreditsystems.github.io/invest-openapi/swagger-ui/#/
+
 
 int main(int argc, char *argv[])
 {

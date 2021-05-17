@@ -68,6 +68,24 @@ QByteArray IRestClient::Get(const QUrl& url) const{
 
 QString IRestClient::modifyDateForURL(const QString& date) const noexcept{
     QString result(40, ' ');
+//    size_t size = date.size();
+//    date.resize(40);
+
+//    for(uint8_t i = 31, j = 39; i >= 0; i--){
+//        if(date[i] != ':' && date[i] != '+')
+//            date[j--] = date[i];
+//        else if(date[i] == ':'){
+//            date[j--] = 'A';
+//            date[j--] = '3';
+//            date[j--] = '%';
+//        }
+//        else{
+//            date[j--] = 'B';
+//            date[j--] = '2';
+//            date[j--] = '%';
+//        }
+//    }
+
     for(uint8_t i = 0, j = 0; i < date.size(); i++){
         if(date[i] != ':' && date[i] != '+')
             result[j++] = date[i];
@@ -83,7 +101,6 @@ QString IRestClient::modifyDateForURL(const QString& date) const noexcept{
             result[j++] = 'B';
         }
     }
-    qDebug() << result;
     return result;
 }
 

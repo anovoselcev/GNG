@@ -27,7 +27,7 @@ namespace DateTime {
       const auto c_now = std::chrono::system_clock::to_time_t(now);
 
       std::stringstream ss;
-      ss << std::put_time(gmtime(&c_now), "%FT%T") <<
+      ss << std::put_time(std::gmtime(&c_now), "%FT%T") <<
         '.' << std::setfill('0') << std::setw(6) << millis << "+00:00" ;
       return QString::fromStdString(ss.str());
     }

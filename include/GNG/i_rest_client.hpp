@@ -66,9 +66,6 @@ public:
                                   uint32_t depth) const;
 
     //! Получение исторических свечей по FIGI
-    //! Надо понять как создавать нужный формат времени
-    //! https://github.com/TinkoffCreditSystems/invest-openapi-go-sdk/blob/master/rest_client.go
-    //! строка 366
     QByteArray GetCandlesByFIGI(const QString& FIGI,
                                 const QString& from,
                                 const QString& to,
