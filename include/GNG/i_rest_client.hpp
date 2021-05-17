@@ -111,6 +111,8 @@ protected:
 
     QByteArray Get(const QUrl& url) const;
 
+    QString modifyDateForURL(const QString& date) const noexcept;
+
 
     mutable std::unique_ptr<QNetworkAccessManager> _manager;
 

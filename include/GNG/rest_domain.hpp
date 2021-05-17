@@ -19,13 +19,19 @@ inline void log(QString&& str) {
 
 namespace DateTime {
 
-    inline QString currentISO8601TimeUTC() {
-      auto now = std::chrono::system_clock::now();
-      auto itt = std::chrono::system_clock::to_time_t(now);
-      std::ostringstream ss;
-      ss << std::put_time(localtime(&itt), "%FT%TZ");
+
+
+    inline QString currentRFC3339() {
+      const auto now = std::chrono::system_clock::now();
+      const auto millis = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count() % 1'000'000;
+      const auto c_now = std::chrono::system_clock::to_time_t(now);
+
+      std::stringstream ss;
+      ss << std::put_time(gmtime(&c_now), "%FT%T") <<
+        '.' << std::setfill('0') << std::setw(6) << millis << "+00:00" ;
       return QString::fromStdString(ss.str());
     }
+
 
     const inline QString MIN_1  = "1min";
     const inline QString MIN_2  = "2min";

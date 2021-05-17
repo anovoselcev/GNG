@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
     c.GetCurrencies();
     c.GetInstrumentByFIGI("BBG000BPH459");
     c.GetOrderBookByFIGI("BBG000BPH459", 2);
-    auto last_date = GNG::DateTime::currentISO8601TimeUTC().toStdString();
-    last_date[2] = '1';
+    auto last_date = GNG::DateTime::currentRFC3339();
+    last_date[3] = '0';
     c.GetCandlesByFIGI("BBG000BPH459",
-                       QString::fromStdString(last_date),
-                       GNG::DateTime::currentISO8601TimeUTC(),
+                      last_date,
+                       GNG::DateTime::currentRFC3339(),
                        GNG::DateTime::MONTH);
 
     return a.exec();

@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QEventLoop>
+#include <QDebug>
 
 namespace GNG {
 
@@ -62,6 +63,28 @@ QByteArray IRestClient::Get(const QUrl& url) const{
     qDebug() << "Get Reply:";
     log(reply->readAll());
     return reply->readAll();
+}
+
+
+QString IRestClient::modifyDateForURL(const QString& date) const noexcept{
+    QString result(40, ' ');
+    for(uint8_t i = 0, j = 0; i < date.size(); i++){
+        if(date[i] != ':' && date[i] != '+')
+            result[j++] = date[i];
+        else if(date[i] == ':'){
+            result[j++] = '%';
+            result[j++] = '3';
+            result[j++] = 'A';
+
+        }
+        else{
+            result[j++] = '%';
+            result[j++] = '2';
+            result[j++] = 'B';
+        }
+    }
+    qDebug() << result;
+    return result;
 }
 
 QByteArray IRestClient::GetOrders() const{
@@ -128,9 +151,9 @@ QByteArray IRestClient::GetCandlesByFIGI(const QString &FIGI,
                                          const QString &interval) const{
     QUrl url = _apiURL + "/market/candles?"
                        + "figi=" + FIGI
-                       + "&from=" + from
-                       + "&to=" + to
-                       + "&interval" + interval;
+                       + "&from=" + modifyDateForURL(from)
+                       + "&to="   + modifyDateForURL(to)
+                       + "&interval=" + interval;
     return Get(url);
 }
 
