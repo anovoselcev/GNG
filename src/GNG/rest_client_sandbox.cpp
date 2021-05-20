@@ -47,6 +47,76 @@ void RestClientSandBox::SetCurrencyBalance(const QString& currency,
     log(reply->readAll());
 }
 
+QByteArray RestClientSandBox::CreateLimitOrder(const QString &figi,
+                                               const QString &operation,
+                                               size_t lots,
+                                               double price,
+                                               const QString &brokID){
+    QUrl url = _apiURL
+            + "/sandbox/orders/limit-order?figi="
+            + figi
+            + "&brokerAccountId=" + brokID;
+
+    QJsonObject body;
+    body.insert("lots", QString::number(lots));
+    body.insert("operation", operation);
+    body.insert("price", QString::number(price));
+
+    auto reply = SendPostRequest(url, body);
+
+    if(!isReplyValid(reply))
+        return {};
+
+    qDebug() << "CreateLimitOrder Reply:";
+    auto data = reply->readAll();
+    log(data);
+    return data;
+}
+
+QByteArray RestClientSandBox::CreateMarketOrder(const QString &figi,
+                                                const QString &operation,
+                                                size_t lots,
+                                                const QString &brokID){
+    QUrl url = _apiURL
+            + "/sandbox/orders/market-order?figi="
+            + figi
+            + "&brokerAccountId=" + brokID;
+
+    QJsonObject body;
+    body.insert("lots", QString::number(lots));
+    body.insert("operation", operation);
+
+    auto reply = SendPostRequest(url, body);
+
+    if(!isReplyValid(reply))
+        return {};
+
+    qDebug() << "CreateMarketOrder Reply:";
+    auto data = reply->readAll();
+    log(data);
+    return data;
+}
+
+QByteArray RestClientSandBox::CancelOrder(const QString &orderID,
+                                          const QString &brokID){
+    QUrl url = _apiURL
+            + "/sandbox/orders/cancel?orderId="
+            + orderID
+            + "&brokerAccountId=" + brokID;
+
+    QJsonObject body;
+
+    auto reply = SendPostRequest(url, body);
+
+    if(!isReplyValid(reply))
+        return {};
+
+    qDebug() << "CancelOrder Reply:";
+    auto data = reply->readAll();
+    log(data);
+    return data;
+}
+
 
 std::vector<Account> RestClientSandBox::Accounts() noexcept{
     QUrl path = _apiURL + "/user/accounts";

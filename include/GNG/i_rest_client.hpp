@@ -8,7 +8,7 @@ namespace GNG {
 
 class IRestClient : public QObject{
 
-Q_OBJECT
+    Q_OBJECT
 
 public:
     IRestClient() = default;
@@ -25,13 +25,21 @@ public:
     QByteArray GetOrders() const;
 
     //! Создание лимитной заявки
-    virtual void CreateLimitOrder(){};
+    virtual QByteArray CreateLimitOrder(const QString& figi,
+                                        const QString& operation,
+                                        size_t lots,
+                                        double price,
+                                        const QString& brokID) = 0;
 
     //! Создание рыночной заявки
-    virtual void CreateMarketOrder(){};
+    virtual QByteArray CreateMarketOrder(const QString& figi,
+                                         const QString& operation,
+                                         size_t lots,
+                                         const QString& brokID) = 0;
 
     //! Отмена заявки
-    virtual void CancelOrder(){};
+    virtual QByteArray CancelOrder(const QString& orderID,
+                                   const QString& brokID) = 0;
 
     //! [0] Orders
 

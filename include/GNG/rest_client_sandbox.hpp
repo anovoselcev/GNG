@@ -34,6 +34,24 @@ public:
 
     //! [0] Sandbox
 
+    //! [1] Orders
+    QByteArray CreateLimitOrder(const QString& figi,
+                                const QString& operation,
+                                size_t lots,
+                                double price,
+                                const QString& brokID) override;
+
+    QByteArray CreateMarketOrder(const QString& figi,
+                                 const QString& operation,
+                                 size_t lots,
+                                 const QString& brokID) override;
+
+    QByteArray CancelOrder(const QString& orderID,
+                           const QString& brokID) override;
+
+
+    //! [1] Orders
+
     std::vector<Account> Accounts() noexcept;
 
 };
