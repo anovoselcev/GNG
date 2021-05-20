@@ -52,8 +52,6 @@ public:
 
     //! [1] Orders
 
-    std::vector<Account> Accounts() noexcept;
-
 };
 
 }

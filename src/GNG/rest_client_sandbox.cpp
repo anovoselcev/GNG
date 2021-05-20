@@ -118,9 +118,5 @@ QByteArray RestClientSandBox::CancelOrder(const QString &orderID,
 }
 
 
-std::vector<Account> RestClientSandBox::Accounts() noexcept{
-    QUrl path = _apiURL + "/user/accounts";
-    return {};
-}
 
 }
